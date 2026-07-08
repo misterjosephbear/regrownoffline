@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
@@ -18,9 +19,10 @@ import net.minecraft.world.level.chunk.UpgradeData;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.levelgen.RandomState;
-import net.minecraft.world.level.levelgen.WorldGenRegion;
 import net.minecraft.world.level.levelgen.blending.Blender;
-import net.minecraft.world.level.levelgen.structure.StructureManager;
+// TODO: this import is a placeholder - IntelliJ couldn't find StructureManager here either.
+// Put your cursor on "StructureManager" below (e.g. on the "level.structureManager()" line) and
+// press Alt+Enter -> "Import class" to let the IDE find the real package, then delete this line.
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -74,7 +76,7 @@ public final class BaselineGenerator {
         ChunkGenerator generator = level.getChunkSource().getGenerator();
         RandomState randomState = level.getChunkSource().randomState();
         StructureManager structureManager = level.structureManager();
-        Registry<Biome> biomes = level.registryAccess().lookupOrThrow(Registries.BIOME);
+        Registry<Biome> biomes = level.registryAccess().registryOrThrow(Registries.BIOME);
 
         CompletableFuture
                 .supplyAsync(() -> buildBaselineChunk(level, generator, randomState, structureManager, biomes, pos),

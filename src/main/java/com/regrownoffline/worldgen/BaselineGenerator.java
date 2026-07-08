@@ -95,9 +95,8 @@ public final class BaselineGenerator {
         ProtoChunk protoChunk = new ProtoChunk(pos, UpgradeData.EMPTY, level, biomes, null);
         List<ChunkAccess> soloRegion = List.of(protoChunk);
 
-        // Executor::run makes these steps execute synchronously on this (already background) thread.
-        generator.createBiomes(Runnable::run, randomState, Blender.empty(), structureManager, protoChunk).join();
-        generator.fillFromNoise(Runnable::run, Blender.empty(), randomState, structureManager, protoChunk).join();
+        generator.createBiomes(randomState, Blender.empty(), structureManager, protoChunk).join();
+        generator.fillFromNoise(Blender.empty(), randomState, structureManager, protoChunk).join();
 
         // A single-chunk WorldGenRegion is sufficient for buildSurface, which only reads the chunk's
         // own noise column/biome data - deliberately not calling applyCarvers/applyBiomeDecoration here,
